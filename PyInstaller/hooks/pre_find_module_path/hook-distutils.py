@@ -29,5 +29,7 @@ def pre_find_module_path(api):
     distutils_dir = getattr(distutils, 'distutils_path', None)
     if distutils_dir is not None:
         # Find this package in its parent directory.
+        if distutils_dir.endswith('__init__.py'):
+            distutils_dir = os.path.dirname(distutils_dir)
         api.search_dirs = [os.path.dirname(distutils_dir)]
         logger.info('distutils: retargeting to non-venv dir %r' % distutils_dir)
